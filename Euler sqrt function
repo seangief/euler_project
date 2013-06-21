@@ -1,0 +1,6 @@
+import math
+n = 1
+while (log(k,10) < 1000):
+	k = ((1+math.sqrt(5))**n-(1-math.sqrt(5))**n)/(2**n*math.sqrt(5))
+	n+=1
+
