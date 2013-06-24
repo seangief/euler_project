@@ -1,5 +1,0 @@
-def euler1():
-	print sum([i for i in range(1000) if (i % 3 == 0 & i % 5 == 0)])
-
-if __name__ == "__main__":
-	euler1()
