@@ -1,0 +1,20 @@
+def euler22():
+	f = open("names.txt")
+	names = f.read()
+	f.close()
+	names = names.strip('\"')
+	names = names.split('\",\"')
+	names.sort()
+	order = []
+	for name in names:
+		total = 0
+		for letter in name:
+			total += ord(letter)-64
+		order.append(total)
+	product = []
+	for t in range(len(order)):
+		product.append((t+1) * order[t])
+	print sum(product)
+
+if __name__ == "__main__":
+	euler22()    
