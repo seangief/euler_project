@@ -1,4 +1,4 @@
-# actually this returns the highest prime that is a sum of multiple primes. Oops.  
+# actually this returns the highest prime that has a sum of multiple  
 import isprime as ip
 
 def euler50():
