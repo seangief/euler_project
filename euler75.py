@@ -4,7 +4,7 @@ import collections as c
 
 def euler75():
 	triplets = c.defaultdict(set)
-	for i in range(1, 1731):
+	for i in range(1, 866):
 		for j in range(1, i):
 			count = 1
 			o, a, h = i**2-j**2, 2*i*j, i**2+j**2

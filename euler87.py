@@ -10,4 +10,4 @@ for x in quad:
 				triplets+=1
 			else:
 				continue
-print len(triplets)http://projecteuler.net/problem=26
+print len(triplets)

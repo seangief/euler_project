@@ -1,33 +1,42 @@
-import itertools as it
-import isprime as pr
+### How the fuck did 0,1,2, or 18 end up in graph!!!!!!!
+
+import collections, isprime as ip, itertools
+
+primes = list(ip.primes_sieve2(10000))
+edges = []
+for a in primes:
+	for b in primes:
+		if a < b: 
+			# I'm pretty sure Python is not lazy, and will do this comparison even if a > b, if I join 
+			# these two conditionals on one line.
+			if iscatprime(a,b):
+				edges.append((a,b))
+graph = {}
+for (a, b) in edges:
+	if a not in graph:
+		graph[a] = set()
+	graph[a].add(b)
+	if b not in graph:
+		graph[b] = set()
+	graph[b].add(a)
+edgeset = set(edges)
+
+four_cliques = []
+for (a, b) in edges:
+	for (c, d) in edges:
+		if len(set([a,b,c,d])) == 4:
+			if ( tuple(sorted([a,c])) in edgeset and tuple(sorted([a,d])) and tuple(sorted([b,c])) in edgeset and tuple(sorted([b,d])) in edgeset):
+				 four_cliques.append([a,b,c,d])
+
+answerset = []
+for four_clique in four_cliques:
+	candidates = set(graph[four_clique[0]]) & set(graph[four_clique[1]]) & set(graph[four_clique[2]]) & set(graph[four_clique[3]])
+	candidates = candidates - set(four_clique)
+	if candidates:
+		for candidate in candidates:
+			answerset.append(sorted([a,b,c,d,candidate]))
 
 
-# except even if this ran quickly enough, it would never produce a combo like (5, 17, 173)
-# maybe it should go along until it finds a pair of primes whose cat is also prime, then
-# go to the next prime, then the next, testing cat combos until it finds the smallest 
-# every prime bigger than 5 ends in 1, 3, 7 or 9
 
-def euler60():
-	base = 7
-	found = False
-	answer = []
-	while not found:
-		primeset = [str(i) for i in range(base, base+25) if pr.isprime(i)]
-		combs = it.combinations(primeset, 5)
-		
-		for combo in combs:
-			perms = it.permutations(combo, 2)
-			ppairset = True
-			for perm in perms:
-				if not pr.isprime(int("".join(perm))):
-					ppairset = False
-					break
-			if ppairset:
-				found = True
-				answer.append(list(combo))
-				break
-		base += 25
-	print min([sum(ppair) for ppair in answer])
-
-if __name__ == "__main__":
-	euler60()
+def iscatprime(a,b):
+	return ip.isprime(int(str(a) + str(b))) and ip.isprime(int(str(b) + str(a)))

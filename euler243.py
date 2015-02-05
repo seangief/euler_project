@@ -1,65 +1,16 @@
-# totient of 94745 = 64944
-# factors of 94745 = 5, 7, 2707
-# 603,912,399,090 definitely works
+from isprime import totient
+from math import factorial
 
-import isprime as ip
-
+# Use totrange!
+# Ans is less than 23! (i.e. 25,852,016,738,884,976,640,000)
 def euler243():
-	ansbound = float(15499)/94744
-	totients = ip.totrange(7000000)
-	numfactr = 94744+1
-	numtotient = ip.totient(numfactr)
-	found = False
-	i = 2
-	try:
-		while not found:
-			temp = i/ip.gcd(numfactr, i)
-			if totients[temp] != 0:
-				if numtotient*totients[temp]/float(i*(numfactr-1)) < ansbound:
-					found = True
-					print numtotient*totients[temp]/float(i*(numfactr-1)), " < ", ansbound
-					print i
-			i+=1
-
-		print numfactr*i
-	except:
-		print i
+	bound, ans = float(15499)/94744, 0
+	factorials = [factorial(x) for x in xrange(2,100)]
+	for fact in factorials:
+		if totient(fact)/float(fact-1) < bound:
+			ans = fact
+			break
+	print ans
 
 if __name__ == "__main__":
 	euler243()
-
-
-
-'''
-def euler243():
-	ansbound = float(15499)/94744
-	numfactr = 94744+1
-	found = False
-	i = 2
-	candidate = numfactr
-	while not found:
-		if ip.gcd(candidate, i) == 1:
-			candidate*= i
-			if ip.totient(candidate)/float(candidate-1) < ansbound:
-				found = True
-		i+= 1
-	print candidate
-
-def euler243():
-	ansbound = float(15499)/94744
-	numfactr = 94744+1
-	found = False
-	i = 2
-	candidate = numfactr
-	try:
-		while not found:
-			candidate = numfactr * i
-			if ip.totient(candidate)/float(candidate-1) < ansbound:
-				found = True
-			i+=1
-
-		print candidate
-	except:
-		print candidate
-
-'''
